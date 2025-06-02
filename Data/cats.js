@@ -105,5 +105,13 @@ export const cats = [
     description: "Huh cat",
     slug: "huh"
   },
+  {
+    id: 'spinning',
+    name: "Spinning",
+    image: "/spinning.jpg",
+    audio: "/audio/spinning.mp3",
+    description: "Spinning cat",
+    slug: "spinning"
+  },
   
 ];
