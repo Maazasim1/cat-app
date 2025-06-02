@@ -18,7 +18,7 @@ export const cats = [
   {
     id: 'awoo',
     name: "Awoo",
-    image: "/awoo.jpg",
+    image: "/Awoo.jpg",
     audio: "/audio/awoo.mp3",
     description: "Awoo cat",
     slug: "awoo"
