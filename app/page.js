@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { cats } from '@/Data/cats';
 
@@ -11,10 +11,12 @@ export default function CatPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [audioElement, setAudioElement] = useState(null);
+  const searchParams = useSearchParams()
 
   // Get current cat from URL
   useEffect(() => {
-    const cat = router.query?.cat;
+    const cat = searchParams.get('cat');
+
     if (cat) {
       const catIndex = cats.findIndex(c => c.slug === cat);
       if (catIndex !== -1) {
@@ -22,7 +24,7 @@ export default function CatPlayer() {
       }
     }
     
-  }, [router.query]);
+  }, []);
 
   // Update URL when track changes
   const updateURL = (index) => {
@@ -193,14 +195,7 @@ export default function CatPlayer() {
             </div>
 
             {/* URL for QR code */}
-            <div className="mt-6 p-3 bg-gray-100 rounded-lg">
-              <p className="text-xs text-gray-600 text-center">
-                Current URL for QR Code:
-              </p>
-              <p className="text-sm font-mono text-center text-gray-800 break-all">
-                {typeof window !== 'undefined' ? window.location.href : `/?cat=${currentCat.slug}`}
-              </p>
-            </div>
+           
           </div>
 
           {/* Audio element */}
