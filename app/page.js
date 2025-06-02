@@ -1,18 +1,20 @@
 'use client'
-import React, { Suspense } from 'react'
+import React, { Suspense,useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState, suspense } from 'react';
 import { cats } from '@/Data/cats';
+import { use } from 'react'
 
 
-export default function CatPlayer() {
+
+export default function CatPlayer(props) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [audioElement, setAudioElement] = useState(null);
-  const searchParams = useSearchParams()
+  const searchParams = use(props.searchParams)
+  
 
   // Get current cat from URL
   // useEffect(() => {
@@ -30,7 +32,7 @@ export default function CatPlayer() {
   // Update URL when track changes
   const updateURL = (index) => {
     const cat = cats[index];
-    router.push(`/?cat=${cat.slug}`, undefined, { shallow: true });
+    router.push(`/?cat=${cat.slug}`);
   };
 
   // Load track and update URL
@@ -68,13 +70,13 @@ export default function CatPlayer() {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const currentCat = cats.find((cat, index) => cat.slug === searchParams.get('cat')) || cats[0];
+  const currentCat = cats.find((cat, index) => cat.slug === searchParams.cat) || cats[0];
 
   return (
     <>
 
 
-      <Suspense fallback={<div className="text-center text-gray-500">Loading...</div>}>
+      
         <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center p-5">
           <div className="bg-white/95 backdrop-blur-lg rounded-3xl p-8 max-w-md w-full shadow-2xl border-2 border-white/30 relative overflow-hidden">
 
@@ -230,7 +232,7 @@ export default function CatPlayer() {
               50% { transform: translateY(-10px); }
               }
               `}</style>
-      </Suspense>
+      
     </>
   );
 }
